@@ -91,4 +91,12 @@ class SchedulerGUI(QWidget):
             self.power_input.clear()
         except ValueError:
             QMessageBox.warning(self, "Input Error", "Please enter valid integers.")
-    
+    def schedule_processes(self):
+        if not self.processes:
+            QMessageBox.warning(self, "No Processes", "Please add processes before scheduling.")
+            return
+        
+        self.result_label.setText("Scheduling...")
+        self.thread = SchedulerThread(self.processes)
+        self.thread.update_signal.connect(self.update_result)
+        self.thread.start()
