@@ -25,3 +25,4 @@ process_list = [
     Process(3, 8, 3, 60),
     Process(4, 2, 1, 20)
 ]
+schedule_processes(process_list)
