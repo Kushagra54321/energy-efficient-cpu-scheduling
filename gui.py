@@ -69,3 +69,25 @@ class SchedulerGUI(QWidget):
         layout.addWidget(self.result_label)
         
         self.setLayout(layout)
+def add_process(self):
+        try:
+            pid = int(self.pid_input.text())
+            burst_time = int(self.burst_input.text())
+            priority = int(self.priority_input.text())
+            power = int(self.power_input.text())
+            
+            self.processes.append(Process(pid, burst_time, priority, power))
+            
+            row_position = self.table.rowCount()
+            self.table.insertRow(row_position)
+            self.table.setItem(row_position, 0, QTableWidgetItem(str(pid)))
+            self.table.setItem(row_position, 1, QTableWidgetItem(str(burst_time)))
+            self.table.setItem(row_position, 2, QTableWidgetItem(str(priority)))
+            self.table.setItem(row_position, 3, QTableWidgetItem(str(power)))
+            
+            self.pid_input.clear()
+            self.burst_input.clear()
+            self.priority_input.clear()
+            self.power_input.clear()
+        except ValueError:
+            QMessageBox.warning(self, "Input Error", "Please enter valid integers.")
