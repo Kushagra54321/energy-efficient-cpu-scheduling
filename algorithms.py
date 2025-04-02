@@ -5,7 +5,6 @@ class Process:
         self.burst_time = burst_time
         self.priority = priority
         self.power_consumption = power_consumption
-
 def schedule_processes(processes):
     # Sorting based on power efficiency (priority first, then power consumption)
     processes.sort(key=lambda x: (x.priority, x.power_consumption))
@@ -20,11 +19,5 @@ def schedule_processes(processes):
     print(f"\nTotal Execution Time: {total_time} units")
     
 # Example Process List (pid, burst_time, priority, power_consumption)
-process_list = [
-    Process(1, 5, 2, 50),
-    Process(2, 3, 1, 30),
-    Process(3, 8, 3, 60),
-    Process(4, 2, 1, 20)
-]
 
-schedule_processes(process_list)
+
