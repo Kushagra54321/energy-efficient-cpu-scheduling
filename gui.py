@@ -69,7 +69,7 @@ class SchedulerGUI(QWidget):
         layout.addWidget(self.result_label)
         
         self.setLayout(layout)
-def add_process(self):
+    def add_process(self):
         try:
             pid = int(self.pid_input.text())
             burst_time = int(self.burst_input.text())
@@ -91,3 +91,4 @@ def add_process(self):
             self.power_input.clear()
         except ValueError:
             QMessageBox.warning(self, "Input Error", "Please enter valid integers.")
+    
