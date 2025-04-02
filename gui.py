@@ -25,3 +25,47 @@ class SchedulerThread(QThread):
             total_time += process.burst_time
             
         self.update_signal.emit(f"\nTotal Execution Time: {total_time} units")
+class SchedulerGUI(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+        self.processes = []
+
+    def initUI(self):
+        self.setWindowTitle("Energy Efficient CPU Scheduler")
+        self.setGeometry(200, 200, 500, 400)
+
+        layout = QVBoxLayout()
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(["PID", "Burst Time", "Priority", "Power Consumption"])
+        layout.addWidget(self.table)
+
+        self.pid_input = QLineEdit(self)
+        self.pid_input.setPlaceholderText("PID")
+        self.burst_input = QLineEdit(self)
+        self.burst_input.setPlaceholderText("Burst Time")
+        self.priority_input = QLineEdit(self)
+        self.priority_input.setPlaceholderText("Priority")
+        self.power_input = QLineEdit(self)
+        self.power_input.setPlaceholderText("Power Consumption")
+        
+        layout.addWidget(self.pid_input)
+        layout.addWidget(self.burst_input)
+        layout.addWidget(self.priority_input)
+        layout.addWidget(self.power_input)
+        
+        self.add_button = QPushButton("Add Process")
+        self.add_button.clicked.connect(self.add_process)
+        layout.addWidget(self.add_button)
+        
+        self.schedule_button = QPushButton("Schedule Processes")
+        self.schedule_button.clicked.connect(self.schedule_processes)
+        layout.addWidget(self.schedule_button)
+        
+        self.result_label = QLabel("")
+        self.result_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.result_label)
+        
+        self.setLayout(layout)
