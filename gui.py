@@ -100,3 +100,5 @@ class SchedulerGUI(QWidget):
         self.thread = SchedulerThread(self.processes)
         self.thread.update_signal.connect(self.update_result)
         self.thread.start()
+    def update_result(self, text):
+        self.result_label.setText(self.result_label.text() + "\n" + text)
