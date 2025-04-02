@@ -102,3 +102,8 @@ class SchedulerGUI(QWidget):
         self.thread.start()
     def update_result(self, text):
         self.result_label.setText(self.result_label.text() + "\n" + text)
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    scheduler_gui = SchedulerGUI()
+    scheduler_gui.show()
+    sys.exit(app.exec_())
