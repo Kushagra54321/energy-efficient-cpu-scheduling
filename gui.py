@@ -2,17 +2,13 @@ import sys
 import time
 from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QTableWidget, QTableWidgetItem, QLineEdit, QMessageBox)
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-class Process:
-    def _init_(self, pid, burst_time, priority, power_consumption):
-        self.pid = pid
-        self.burst_time = burst_time
-        self.priority = priority
-        self.power_consumption = power_consumption
+from algorithms import Process, schedule_processes
+
 class SchedulerThread(QThread):
     update_signal = pyqtSignal(str)
 
-    def _init_(self, processes):
-        super()._init_()
+    def __init__(self, processes):
+        super().__init__()
         self.processes = processes
 
     def run(self):
@@ -25,6 +21,7 @@ class SchedulerThread(QThread):
             total_time += process.burst_time
             
         self.update_signal.emit(f"\nTotal Execution Time: {total_time} units")
+
 class SchedulerGUI(QWidget):
     def __init__(self):
         super().__init__()
@@ -69,6 +66,7 @@ class SchedulerGUI(QWidget):
         layout.addWidget(self.result_label)
         
         self.setLayout(layout)
+    
     def add_process(self):
         try:
             pid = int(self.pid_input.text())
@@ -89,8 +87,10 @@ class SchedulerGUI(QWidget):
             self.burst_input.clear()
             self.priority_input.clear()
             self.power_input.clear()
+            
         except ValueError:
             QMessageBox.warning(self, "Input Error", "Please enter valid integers.")
+    
     def schedule_processes(self):
         if not self.processes:
             QMessageBox.warning(self, "No Processes", "Please add processes before scheduling.")
@@ -100,8 +100,10 @@ class SchedulerGUI(QWidget):
         self.thread = SchedulerThread(self.processes)
         self.thread.update_signal.connect(self.update_result)
         self.thread.start()
+    
     def update_result(self, text):
         self.result_label.setText(self.result_label.text() + "\n" + text)
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     scheduler_gui = SchedulerGUI()
